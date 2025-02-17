@@ -1,0 +1,67 @@
+Practica 1:
+
+Sudo - su 
+cd  /etc/default/
+Ls
+vi grub 
+Grub2-nkconfig -o /boot/grub2/grub.cfg
+Reboot  
+rd.break enforcing=0
+Mount -o remount.rw /sysroot
+Chroot /sysroot
+Passwd root
+Exit 
+Reboot
+----------------------------------------------------------------------
+Practica 2:
+
+vi backup.sh
+
+#!/bin/bash
+
+echo "si"
+echo "no"
+
+read option
+
+if [ "$option" == "si" ]; then
+    fecha=$(date +"%d-%m-%Y-%H-%M")
+    destino="/home/joancuevas/backup_$fecha.tar.gz"
+    tar -zcvf "$destino" "/home/joancuevas"
+    echo "Backup realizado"
+
+elif [ "$option" == "no" ]; then
+    echo "exit"
+fi
+
+sudo chmod 700 backup.sh
+./backup.sh
+
+
+-
+vi if.sh
+
+#!/bin/bash
+echo "Escribe el nombre del archivo con los datos de ifconfig: "
+read nombre
+
+ruta="/home/joancuevas/${nombre}.txt"
+ifconfig > "$ruta"
+
+echo "Se ha creado el archivo en $ruta"
+
+sudo chmod 700 if.sh
+./if.sh
+-------------------------------------------------------------------------
+Practica 3:
+
+sudo yum install openssh-server 
+systemctl start sshd 
+systemctl status sshd
+ssh joancuevas@10.0.0.10
+ssh-keygen
+mkdir .ssh
+sudo chmod 700 ~/.ssh
+Cd .ssh/
+vi authorized_keys
+Sudo chmod 600 authorized_keys
